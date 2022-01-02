@@ -1,5 +1,5 @@
 const canvas = document.querySelector("#myCanvas");
-const ctx = canvas.getContext('2d');
+const ctx = canvas.getContext("2d");
 
 function start() {
   requestId = window.requestAnimationFrame(draw);
@@ -43,33 +43,33 @@ function start() {
           break;
 
         case "gameOver":
-          updateBackground()
-          updateBase()
+          updateBackground();
+          updateBase();
           updatePipe();
-          updateBird()
-          updateScore()
-          updateMessage("gameOver")
-          updateMessage("restart")
-          control()
+          updateBird();
+          updateScore();
+          updateMessage("gameOver");
+          updateMessage("restart");
+          control();
           break;
       }
-    }, 1000 / 60)
+    }, 1000 / 60);
   }
 
   function updateBackground() {
     const background = new Image(288, 512);
-    background.src = '/assets/sprites/background-day.png';
+    background.src = "assets/sprites/background-day.png";
     ctx.drawImage(background, 0, 0);
   }
 
   function updateBase() {
     const base = new Image(336, 112);
-    base.src = '/assets/sprites/base.png';
+    base.src = "assets/sprites/base.png";
 
     switch (gameState) {
       case "gamePending":
       case "gamePlaying":
-        ctx.drawImage(base, xBase, 400)
+        ctx.drawImage(base, xBase, 400);
         xBase--;
         if (xBase === -48) {
           xBase = 0;
@@ -77,7 +77,7 @@ function start() {
         break;
 
       case "gameOver":
-        ctx.drawImage(base, xBase, 400)
+        ctx.drawImage(base, xBase, 400);
         break;
     }
   }
@@ -85,22 +85,25 @@ function start() {
   function updatePipe() {
     const pipeTop = new Image(52, 320);
     const pipeBottom = new Image(52, 320);
-    pipeTop.src = '/assets/sprites/pipe-green-top.jpg';
-    pipeBottom.src = '/assets/sprites/pipe-green-bottom.jpg';
+    pipeTop.src = "assets/sprites/pipe-green-top.jpg";
+    pipeBottom.src = "assets/sprites/pipe-green-bottom.jpg";
 
     switch (gameState) {
       case "gamePlaying":
-        if (xPipe1 === -120) { // reset first pipe
+        if (xPipe1 === -120) {
+          // reset first pipe
           xPipe1 = 288;
           hPipe_Top1 = randomHeightPipe(60, 260);
           hPipe_Bottom1 = 320 - hPipe_Top1;
         }
-        if (xPipe2 === -52) { // reset second pipe
+        if (xPipe2 === -52) {
+          // reset second pipe
           xPipe2 = 288;
           hPipe_Top2 = randomHeightPipe(90, 210);
           hPipe_Bottom2 = 320 - hPipe_Top2;
         }
-        if (xPipe1 <= 88 || xPipe2 <= 88) { // draw new pipe
+        if (xPipe1 <= 88 || xPipe2 <= 88) {
+          // draw new pipe
           xPipe2--;
           ctx.drawImage(pipeTop, 0, 0, 52, 320, xPipe2, hPipe_Top2 - 320, 52, 320);
           ctx.drawImage(pipeBottom, 0, 0, 52, hPipe_Bottom2, xPipe2, 400 - hPipe_Bottom2, 52, hPipe_Bottom2);
@@ -129,19 +132,20 @@ function start() {
 
     switch (positionFlap) {
       case "mid":
-        bird.src = '/assets/sprites/yellowbird-midflap.png';
+        bird.src = "assets/sprites/yellowbird-midflap.png";
         break;
 
       case "up":
-        bird.src = '/assets/sprites/yellowbird-upflap.png';
+        bird.src = "assets/sprites/yellowbird-upflap.png";
         break;
 
       case "down":
-        bird.src = '/assets/sprites/yellowbird-downflap.png';
+        bird.src = "assets/sprites/yellowbird-downflap.png";
         break;
     }
 
-    if (gameState === "gamePending") { // animation bird up-down
+    if (gameState === "gamePending") {
+      // animation bird up-down
       switch (birdState) {
         case "up":
           yBird--;
@@ -159,7 +163,8 @@ function start() {
       }
     }
 
-    if (gameState === "gamePlaying" && frame % 4 === 0) { // animation bird flapping when play
+    if (gameState === "gamePlaying" && frame % 4 === 0) {
+      // animation bird flapping when play
       switch (positionFlap) {
         case "mid":
           positionFlap = "up";
@@ -185,7 +190,8 @@ function start() {
       disable = true;
     }
 
-    if (gameState === "gamePlaying" && !isClick) { // bird falls when not click
+    if (gameState === "gamePlaying" && !isClick) {
+      // bird falls when not click
       const gravity = yBird * 0.015;
       yBird += gravity;
     }
@@ -195,23 +201,12 @@ function start() {
     }
 
     if (!disable) {
-      ctx.drawImage(bird, 127, yBird)
+      ctx.drawImage(bird, 127, yBird);
     }
   }
 
   function updateScore() {
-    const scores = [
-      "assets/sprites/0.png",
-      "assets/sprites/1.png",
-      "assets/sprites/2.png",
-      "assets/sprites/3.png",
-      "assets/sprites/4.png",
-      "assets/sprites/5.png",
-      "assets/sprites/6.png",
-      "assets/sprites/7.png",
-      "assets/sprites/8.png",
-      "assets/sprites/9.png"
-    ]
+    const scores = ["assets/sprites/0.png", "assets/sprites/1.png", "assets/sprites/2.png", "assets/sprites/3.png", "assets/sprites/4.png", "assets/sprites/5.png", "assets/sprites/6.png", "assets/sprites/7.png", "assets/sprites/8.png", "assets/sprites/9.png"];
 
     if (xPipe1 === 110 || xPipe2 === 110) {
       scoreNum++;
@@ -238,19 +233,19 @@ function start() {
     switch (typeOfMessage) {
       case "guide":
         const guideMessage = new Image(184, 267);
-        guideMessage.src = '/assets/sprites/message.png';
+        guideMessage.src = "assets/sprites/message.png";
         ctx.drawImage(guideMessage, 52, 190);
         break;
 
       case "gameOver":
         const messageOver = new Image(192, 42);
-        messageOver.src = '/assets/sprites/gameover.png';
+        messageOver.src = "assets/sprites/gameover.png";
         ctx.drawImage(messageOver, 48, 235);
         break;
 
       case "restart":
         const messageRestart = new Image(196, 14);
-        messageRestart.src = '/assets/sprites/restart.png';
+        messageRestart.src = "assets/sprites/restart.png";
         ctx.drawImage(messageRestart, 36, 290);
         break;
     }
@@ -259,92 +254,95 @@ function start() {
   function updateAudio(state) {
     switch (state) {
       case "wing":
-        const sound = new Audio
-        sound.src = "/assets/audio/wing.ogg";
+        const sound = new Audio();
+        sound.src = "assets/audio/wing.ogg";
         sound.play();
         break;
       case "point":
-        const sound1 = new Audio
-        sound1.src = "/assets/audio/point.ogg";
+        const sound1 = new Audio();
+        sound1.src = "assets/audio/point.ogg";
         sound1.play();
         break;
       case "die":
-        const sound2 = new Audio
-        sound2.src = "/assets/audio/die.ogg";
+        const sound2 = new Audio();
+        sound2.src = "assets/audio/die.ogg";
         sound2.play();
         break;
       case "hit":
-        const sound3 = new Audio
-        sound3.src = "/assets/audio/hit.ogg";
+        const sound3 = new Audio();
+        sound3.src = "assets/audio/hit.ogg";
         sound3.play();
         break;
       case "swoosh":
-        const sound4 = new Audio
-        sound4.src = "/assets/audio/swoosh.ogg";
+        const sound4 = new Audio();
+        sound4.src = "assets/audio/swoosh.ogg";
         sound4.play();
         break;
     }
   }
 
   function logic() {
-    if (yBird >= 374) { // bird hits ground
+    if (yBird >= 374) {
+      // bird hits ground
       gameState = "gameOver";
       birdState = "hitGround";
     }
 
-    if (xPipe1 >= 100 && xPipe1 <= 160) { // bird hits pipe1
-      if (yBird <= (hPipe_Top1 + 1) || yBird >= 400 - (hPipe_Bottom1 + 24)) {
-        gameState = "gameOver"
-        birdState = "hitPipe"
+    if (xPipe1 >= 100 && xPipe1 <= 160) {
+      // bird hits pipe1
+      if (yBird <= hPipe_Top1 + 1 || yBird >= 400 - (hPipe_Bottom1 + 24)) {
+        gameState = "gameOver";
+        birdState = "hitPipe";
       }
     }
 
-    if (xPipe2 >= 100 && xPipe2 <= 160) { // bird hits pipe2
-      if (yBird <= (hPipe_Top2 + 1) || yBird >= 400 - (hPipe_Bottom2 + 24)) {
-        gameState = "gameOver"
-        birdState = "hitPipe"
+    if (xPipe2 >= 100 && xPipe2 <= 160) {
+      // bird hits pipe2
+      if (yBird <= hPipe_Top2 + 1 || yBird >= 400 - (hPipe_Bottom2 + 24)) {
+        gameState = "gameOver";
+        birdState = "hitPipe";
       }
     }
 
     if (gameState === "gameOver") {
-      updateAudio("hit")
-      updateAudio("die")
-      updateAudio("swoosh")
+      updateAudio("hit");
+      updateAudio("die");
+      updateAudio("swoosh");
     }
   }
 
   function control() {
     switch (gameState) {
       case "gamePending":
-        window.onkeydown = ((e) => {
+        window.onkeydown = (e) => {
           if (e.keyCode == 32) {
             gameState = "gamePlaying";
           }
-        })
+        };
         break;
 
       case "gamePlaying":
-        window.onkeydown = ((e) => {
+        window.onkeydown = (e) => {
           if (e.keyCode === 32) {
             updateAudio("wing");
             isClick = true;
           }
-        })
+        };
 
-        window.onkeyup = ((e) => {
+        window.onkeyup = (e) => {
           if (e.keyCode === 32) {
             isClick = false;
           }
-        })
+        };
         break;
 
       case "gameOver":
-        window.onkeydown = ((e) => {
+        window.onkeydown = (e) => {
           if (e.keyCode == 13) {
             resetDefault();
             gameState = "gamePending";
           }
-        })
+        };
         break;
     }
   }
